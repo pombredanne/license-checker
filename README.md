@@ -56,10 +56,13 @@ scanning ./yui-lint
 Options
 -------
 
-* `--unknown` to only show licenses that it can't determine or guess at (from README)
+* `--unknown` report guessed licenses as unknown licenses.
+* `--onlyunknown` only list packages with unknown or guessed licenses.
 * `--json` output in json format.
 * `--csv` output in csv format.
 * `--out [filepath]` write the data to a specific file.
+* `--customPath` to add a custom Format file in JSON
+* `--exclude [list]` exclude modules which licenses are in the comma-separated list from the output
 
 Examples
 --------
@@ -68,6 +71,9 @@ Examples
 license-checker --json > /path/to/licenses.json
 license-checker --csv --out /path/to/licenses.csv
 license-checker --unknown
+license-checker --customPath customFormatExample.js 
+license-checker --exclude 'MIT, MIT/X11, BSD, ISC'
+license-checker --onlyunknown
 ```
 
 Requiring
@@ -79,8 +85,12 @@ var checker = require('license-checker');
 
 checker.init({
     start: '/path/to/start/looking'
-}, function(json) {
-    //The sorted json data
+}, function(json, err) {
+    if (err) {
+        //Handle error
+    } else {
+        //The sorted json data
+    }
 });
 ```
 
