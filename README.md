@@ -18,7 +18,6 @@ license-checker
 You should see something like this:
 
 ```
-scanning ./yui-lint
 ├─ cli@0.4.3
 │  ├─ repository: http://github.com/chriso/cli
 │  └─ licenses: MIT
@@ -53,9 +52,21 @@ scanning ./yui-lint
       └─ repository: http://github.com/yui/yui-lint
 ```
 
+An asterisk next to a license name means that it was deduced from
+an other file than package.json (README, LICENSE, ...)
+You could see something like this:
+
+```
+└─ debug@2.0.0
+   ├─ repository: https://github.com/visionmedia/debug
+   └─ licenses: MIT*
+```
+
 Options
 -------
 
+* `--production` only show production dependencies.
+* `--development` only show development dependencies.
 * `--unknown` report guessed licenses as unknown licenses.
 * `--onlyunknown` only list packages with unknown or guessed licenses.
 * `--json` output in json format.
@@ -63,6 +74,7 @@ Options
 * `--out [filepath]` write the data to a specific file.
 * `--customPath` to add a custom Format file in JSON
 * `--exclude [list]` exclude modules which licenses are in the comma-separated list from the output
+* `--relativeLicensePath` output the location of the license files as relative paths 
 
 Examples
 --------
@@ -92,6 +104,25 @@ checker.init({
         //The sorted json data
     }
 });
+```
+
+Debugging
+---------
+
+license-checker uses [debug](https://www.npmjs.com/package/debug) for internal logging. There’s two internal markers:
+
+* `license-checker:error` for errors
+* `license-checker:log` for non-errors
+
+Set the `DEBUG` environment variable to one of these to see debug output:
+
+```shell
+$ export DEBUG=license-checker*; license-checker
+scanning ./yui-lint
+├─ cli@0.4.3
+│  ├─ repository: http://github.com/chriso/cli
+│  └─ licenses: MIT
+# ...
 ```
 
 build status
